@@ -13,11 +13,24 @@ public class LoginPage extends BasePage {
     private final By txtPassword = By.id("password");
     private final By btnLogin = By.cssSelector("input[value='Login']");
     private final By lnkRegistrationPage = By.cssSelector("a[href='Register.cshtml']");
-    private final By lnkForgotPasswordPage = By.cssSelector("a[href='/Account/ForgotPassword.cshtml']");
-    private final By lblWelcomeMessage = By.cssSelector("div[class='account'] > strong");
-    private final By lblErrorMessageAtTop = By.cssSelector("p[class='message error LoginForm']");
 
-    // Elements
+    private final By lnkForgotPasswordPage = By.cssSelector("a[href='/Account/ForgotPassword.cshtml']");
+
+    private final By lblWelcomeMessage = By.cssSelector("div[class='account'] > strong");
+
+    //
+    private final By lblTopicContentAtTop = By.cssSelector("div#content h1");
+
+    private WebElement getLblTopicContentAtTop() {
+        return DriverHelper.getDriver().findElement(lblTopicContentAtTop);
+    }
+
+    public String getTopicContentAtTop() {
+        return this.getLblTopicContentAtTop().getText();
+    }
+
+    // Login Page
+    //
     private WebElement getTxtUsername() {
         return DriverHelper.getDriver().findElement(txtUsername);
     }
@@ -42,18 +55,23 @@ public class LoginPage extends BasePage {
         return DriverHelper.getDriver().findElement(lblWelcomeMessage);
     }
 
-    private WebElement getLblErrorMessageAtTop() {
-        return DriverHelper.getDriver().findElement(lblErrorMessageAtTop);
-    }
+    //private WebElement getLblErrorMessageAtTop() {
+    // return DriverHelper.getDriver().findElement(lblErrorMessageAtTop);
+    // }
 
     // Methods
     public String getWelcomeMessage() {
         return this.getLblWelcomeMessage().getText();
     }
 
-    public String getErrorMessageAtTop() {
-        return this.getLblErrorMessageAtTop().getText();
-    }
+    // public String getErrorMessageAtTop() {
+    // return this.
+
+    //getLblErrorMessageAtTop().
+
+    //getText();
+
+//}
 
     public void login(String user, String password) {
         ElementHelper.scrollTo(this.getTxtUsername());

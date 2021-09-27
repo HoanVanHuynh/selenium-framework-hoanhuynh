@@ -1,6 +1,6 @@
 package tests;
 
-import common.Constants;
+import common.Account;
 import helpers.DataHelper;
 import helpers.LogHelper;
 import org.testng.Assert;
@@ -9,39 +9,30 @@ import page_objects.RegisterPage;
 
 public class RegisterTests extends BaseTest {
 
+    private Account account = new Account();
     private RegisterPage registerPage = new RegisterPage();
+    private String email = DataHelper.getRandomEmail();
+    private String password = DataHelper.getRandomPassword(10);
+    private String pid = DataHelper.getRandomDigits(10);
+
 
     @Test(description = "User can create an account successfully with valid register information")
     public void tc001_RegisterWithValidInformation() {
+        LogHelper.info("Set all valid register information");
+        account.setEmail(email);
+        account.setPassword(password);
+        account.setConfirmPassword(password);
+        account.setPid(pid);
+
         LogHelper.info("Click on Register tab");
         registerPage.clickRegisterTab();
-        String validEmail = DataHelper.getRandomEmail();
-        String validPassword = DataHelper.getRandomPassword();
-        String validPid = DataHelper.getRandomDigits(10);
 
-        LogHelper.info("Enter register information");
-        registerPage.register(validEmail, validPassword, validPassword, validPid);
+        LogHelper.info("Register a account");
+        registerPage.register(account);
 
         String actualResult = registerPage.getRegisterSuccessMessage();
         String expectedResult = "You're here";
 
         Assert.assertEquals(actualResult, expectedResult, "Register success message displays incorrectly");
     }
-
-    @Test(description = "Error message display when user register with exist email, valid password and confirm password, valid pid")
-    public void tc002_RegisterWithExistEmail() {
-        LogHelper.info("Click on Register tab");
-        registerPage.clickRegisterTab();
-        String validPassword = DataHelper.getRandomPassword();
-        String validPid = DataHelper.getRandomDigits(10);
-
-        LogHelper.info("Enter register information");
-        registerPage.register(Constants.USERNAME, validPassword, validPassword, validPid);
-
-        String actualResult = registerPage.getRegisterErrorMessage();
-        String expectedResult = "There're errors in the form. Please correct the errors and try again.";
-
-        Assert.assertEquals(actualResult, expectedResult, "error message displays incorrectly");
-    }
-
 }

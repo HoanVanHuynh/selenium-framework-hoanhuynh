@@ -9,7 +9,9 @@ public class BasePage {
     // Locators
     private final By tabLogin = By.cssSelector("a[href$='Login.cshtml']");
     private final By tabLogout = By.cssSelector("a[href$='Logout']");
+
     private final By tabRegister = By.cssSelector("li > a[href$='Register.cshtml']");
+
     private final By tabTimeTable = By.cssSelector("a[href='TrainTimeListPage.cshtml']");
     private final By tabTicketPrice = By.cssSelector("a[href$='TrainPriceListPage.cshtml']");
     private final By tabBookTicket = By.cssSelector("a[href$='BookTicketPage.cshtml']");

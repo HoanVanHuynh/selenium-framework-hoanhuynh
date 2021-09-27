@@ -3,6 +3,7 @@ package page_objects;
 import common.Ticket;
 import helpers.DriverHelper;
 import helpers.ElementHelper;
+import helpers.Wait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -22,6 +23,21 @@ public class BookTicketPage extends BasePage {
     private final By btnBookTicket = By.cssSelector("input[type='submit']");
     private final By lblBookTicketMessage = By.cssSelector("div[id='content'] > h1");
 
+    private final By ticketResult = By.xpath("//table[@class = 'MyTable WideTable']//tr[@class='OddRow']");
+    //
+    private final By lblBookTicketFormTitle = By.cssSelector("form[method='post'] fieldset legend");
+
+    private WebElement getLblBookTicketFormTitle() {
+        Wait.untilElementIsVisible(lblBookTicketFormTitle, 10);
+        return DriverHelper.getDriver().findElement(lblBookTicketFormTitle);
+    }
+
+    public String getBookTicketFormTitle() {
+        return this.getLblBookTicketFormTitle().getText();
+    }
+
+    // Book ticket form
+    //
     // Elements of drop down
     private Select getDropDownDepartDate() {
         Select select = new Select(DriverHelper.getDriver().findElement(cboDate));
@@ -112,6 +128,50 @@ public class BookTicketPage extends BasePage {
         return false;
     }
 
+    public void getAllTicketResult() {
+        List<WebElement> allResult = DriverHelper.getDriver().findElements(ticketResult);
+        for (int i = 0; i < allResult.size(); i++) {
+            System.out.println(allResult.size());
+            System.out.println(i);
+            System.out.println(allResult.get(i).getText());
+        }
+    }
+
+    public String getAllTicketResult2() {
+        List<WebElement> allResult = DriverHelper.getDriver().findElements(ticketResult);
+        String result = "";
+        for (int i = 0; i < allResult.size(); i++) {
+            if (i == 4 || i == 5) {
+                continue;
+            }
+            result = result + allResult.get(i).getText();
+            System.out.println(allResult.get(i).getText());
+        }
+        return result;
+    }
+
+    public String getAllTicketResult3() {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        List<WebElement> allResult = DriverHelper.getDriver().findElements(ticketResult);
+
+        for (int i = 1; i < allResult.size(); i++) {
+            stringBuilder.append(allResult.get(i).getText() + " ");
+        }
+        return stringBuilder.toString();
+    }
+
+    public String getAllTicketResult4() {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        List<WebElement> allResult = DriverHelper.getDriver().findElements(ticketResult);
+
+        for (int i = 1; i < allResult.size(); i++) {
+            stringBuilder.append(allResult.get(i).getText());
+        }
+        return stringBuilder.toString();
+    }
+
     public void selectDepartDate(String departDate) {
         this.getDropDownDepartDate().selectByVisibleText(departDate);
     }
@@ -145,5 +205,18 @@ public class BookTicketPage extends BasePage {
     public String getBookTicketMessage() {
         return this.getLblBookTicketMessage().getText();
     }
+
+    private String dynamicRow = "//table[@class='MyTable WideTable']/tbody//td[text()='%s']";
+
+    public WebElement getLblDepartStation(String departStation) {
+        String dynamicCheckPriceButton = String.format(dynamicRow, departStation);
+        By checkPriceButton = By.xpath(dynamicCheckPriceButton);
+        return DriverHelper.getDriver().findElement(checkPriceButton);
+    }
+
+    public String getDepartStation(String departStation) {
+        return this.getLblDepartStation(departStation).getText();
+    }
+
 }
 

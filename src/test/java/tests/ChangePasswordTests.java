@@ -19,7 +19,7 @@ public class ChangePasswordTests extends BaseTest {
         LogHelper.info("Click on Register tab");
         registerPage.clickRegisterTab();
         String validEmail = DataHelper.getRandomEmail();
-        String validPassword = DataHelper.getRandomPassword();
+        String validPassword = DataHelper.getRandomPassword(3);
         String validPid = DataHelper.getRandomDigits(10);
         registerPage.register(validEmail, validPassword, validPassword, validPid);
 
@@ -27,7 +27,7 @@ public class ChangePasswordTests extends BaseTest {
         registerPage.clickLoginTab();
         loginPage.login(validEmail, validPassword);
         loginPage.clickChangePasswordTab();
-        String validNewPassword = DataHelper.getRandomPassword();
+        String validNewPassword = DataHelper.getRandomPassword(4);
         changePasswordPage.changePassword(validEmail, validNewPassword, validNewPassword);
 
         String actualMessage = changePasswordPage.getChangePasswordMessage();

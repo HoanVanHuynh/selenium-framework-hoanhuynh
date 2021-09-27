@@ -4,6 +4,8 @@ import helpers.DriverHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.List;
+
 
 public class TimeTablePage extends BasePage {
 
@@ -17,11 +19,13 @@ public class TimeTablePage extends BasePage {
         return DriverHelper.getDriver().findElement(checkPriceButton);
     }
 
+
     public WebElement getBookTicketButton(String departStation, String arriveStation) {
         String dynamicBookTicketButton = String.format(dynamicTimeTableBookTicketRow, departStation, arriveStation);
         By bookTicketButton = By.xpath(dynamicBookTicketButton);
         return DriverHelper.getDriver().findElement(bookTicketButton);
     }
+
 
     // Methods
     public void clickCheckPriceButton(String departStation, String arriveStation) {

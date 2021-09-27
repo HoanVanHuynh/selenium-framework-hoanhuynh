@@ -3,6 +3,7 @@ package tests;
 
 import common.Constants;
 import helpers.DataHelper;
+import helpers.DriverHelper;
 import helpers.LogHelper;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -12,31 +13,25 @@ public class LoginTests extends BaseTest {
 
     private LoginPage loginPage = new LoginPage();
 
-    @Test(description = "Login with valid username and password")
-    public void tc001_LoginWithValidInformation() {
-        LogHelper.info("Click on login tab");
+    @Test(description = "System shows message when user enters wrong password several times")
+    public void tc05_SystemShowsMessage() {
+        LogHelper.info("Click on Login tab");
         loginPage.clickLoginTab();
-        loginPage.login(Constants.USERNAME, Constants.PASSWORD);
 
-        String actualMessage = loginPage.getWelcomeMessage();
-        String expectedMsg = "Welcome " + Constants.USERNAME;
+        String invalidPassword = "11122233345";
 
-        Assert.assertEquals(actualMessage, expectedMsg, "message is not displayed as expected");
+        LogHelper.info("Log in 4 times with valid username but invalid password");
+        for (int i = 0; i < 4; i++) {
+            loginPage.login(Constants.USERNAME, invalidPassword);
+        }
 
-    }
-
-    @Test(description = "Login with invalid username and valid password")
-    public void tc002_LoginWithInvalidUsername() {
-        LogHelper.info("Click on login tab");
-        loginPage.clickLoginTab();
-        String invalidUserName = "ddddddddd";
-        String validPassword = DataHelper.getRandomPassword();
-        loginPage.login(invalidUserName, validPassword);
-
+        LogHelper.info("Get error message after logging in 4 times with invalid password");
         String actualMessage = loginPage.getErrorMessageAtTop();
-        String expectedMessage = "Invalid username or password. Please try again.";
+        String expectedMessage = "You have used 4 out of 5 login attempts. After all 5 have been used, you will be unable to login for 15 minutes.";
 
-        Assert.assertEquals(actualMessage, expectedMessage, "message does not display correctly");
+        LogHelper.info("Verify that error message displays correctly after logging in 4 times with invalid password");
+        Assert.assertEquals(actualMessage, expectedMessage, "Error message is displayed incorrectly as expected");
     }
-
 }
+
+// Invalid username or password. Please try again.

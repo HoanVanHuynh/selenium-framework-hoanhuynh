@@ -10,8 +10,12 @@ public class DataHelper {
         return faker.internet().emailAddress();
     }
 
-    public static String getRandomPassword() {
-        return faker.letterify("??????????");
+    public static String getRandomPassword(int numberOfPassword) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 1; i <= numberOfPassword; i++) {
+            stringBuilder.append(faker.bothify("?"));
+        }
+        return stringBuilder.toString();
     }
 
     public static String getRandomDigits(int count) {

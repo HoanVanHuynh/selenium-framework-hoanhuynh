@@ -1,5 +1,6 @@
 package page_objects;
 
+import common.Account;
 import common.Constants;
 import helpers.DriverHelper;
 import helpers.ElementHelper;
@@ -63,16 +64,16 @@ public class RegisterPage extends BasePage {
     }
 
     // Methods
-    public void register(String email, String password, String confirmPassword, String pid) {
+    public void register(Account account) {
         ElementHelper.scrollTo(this.getTxtEmail());
         this.getTxtEmail().clear();
-        this.getTxtEmail().sendKeys(email);
+        this.getTxtEmail().sendKeys(account.getEmail());
         this.getTxtPassword().clear();
-        this.getTxtPassword().sendKeys(password);
+        this.getTxtPassword().sendKeys(account.getPassword());
         this.getTxtConfirmPassword().clear();
-        this.getTxtConfirmPassword().sendKeys(confirmPassword);
+        this.getTxtConfirmPassword().sendKeys(account.getConfirmPassword());
         this.getTxtPid().clear();
-        this.getTxtPid().sendKeys(pid);
+        this.getTxtPid().sendKeys(account.getPid());
         this.getBtnRegister().click();
     }
 
